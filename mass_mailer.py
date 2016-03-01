@@ -7,7 +7,6 @@
 #	to a designated recipient list
 #
 #	~ Liviu Itoafa, Mitchell Hines 
-#       ~ Encription Limited
 #
 #
 # CHANGELOG
