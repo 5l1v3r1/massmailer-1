@@ -119,16 +119,20 @@ def banner():
 	print base64.b64decode("IF9fICBfXyAgICAgICAgICAgICAgIF9fICBfXyAgICAgICBfIF8gICAgICAgICAgIAp8ICBcLyAgfCAgICAgICAgICAgICB8ICBcLyAgfCAgICAgKF8pIHwgICAgICAgICAgCnwgXCAgLyB8IF9fIF8gX19fIF9fX3wgXCAgLyB8IF9fIF8gX3wgfCBfX18gXyBfXyAKfCB8XC98IHwvIF9gIC8gX18vIF9ffCB8XC98IHwvIF9gIHwgfCB8LyBfIFwgJ19ffAp8IHwgIHwgfCAoX3wgXF9fIFxfXyBcIHwgIHwgfCAoX3wgfCB8IHwgIF9fLyB8ICAgCnxffCAgfF98XF9fLF98X19fL19fXy9ffCAgfF98XF9fLF98X3xffFxfX198X3wgIHYlcwotLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLQoK")% str(VERSION),
 
 if __name__ == "__main__":
-
-	if (len(sys.argv) < 3):
-		print "Usage: %s [config.massmail] [verbose: 0 | 1]" % (sys.argv[0])
-		print "Example: %s config.massmail 0" %(sys.argv[0])
+	
+	banner()
+	if ( "-c" not in sys.argv or "-m" not in sys.argv):
+		print "Usage: %s [options]" % (sys.argv[0])
+		print "\nOptions:\n"
+		print "\t-c\tconfig file"
+		print "\t-m\tmessage file"
+		print "\t-v\tverbose\n"
+		print "Example: %s -c config.massmail -m msg.html -v" %(sys.argv[0])
 		exit(1)
 
-	banner()
 #----------- CONFIG prep -----------
 
-	if (sys.argv[2] == 1):
+	if ("-v" in sys.argv):
 		VERBOSE = True
 		print OK + "[+] Verbose mode enabled" + ENDC
 
