@@ -37,6 +37,7 @@ VERSION = 1.1
 # ----------------- SEND EMAIL function ----------------------
 
 def send_mail(server, from_address, from_name, to_address, subject, body_arg, return_addr, tls):
+
 	msg = MIMEMultipart('alternative')
 	msg['To'] = to_address
 	msg['Date'] = formatdate(localtime = True)
@@ -82,8 +83,6 @@ def parse_config(in_config):
 				out_config['RET_ADDR'] = line[1].strip()
 			elif line[0] == "SUBJECT":
 				out_config['SUBJECT'] = line[1].strip()
-			elif line[0] == "MSG_BODY":
-				out_config['MSG_BODY'] = line[1].strip()
 			elif line[0] == "TIMEOUT":
 				out_config['TIMEOUT'] = line[1].strip()
 			elif line[0] == "TIMEOUT":
@@ -93,18 +92,18 @@ def parse_config(in_config):
 
 #----------------- PARSE  includes/msg.massmail file to get email body ---------
 
-def parse_body(name, body):
+def parse_body(name, message):
 
 	try:
 		fname = name.split(".")[0]
 		fname = fname[0].upper() + fname[1:]
-		f = open("includes/"+body, "r")
+		f = open(message, "r")
 		rd = f.read()
 		rd=rd.replace("%FIRSTNAME%", fname)
 		f.close()
 	except IOError as e:
-		print FAIL + "[-] Cannot open: %s" % (body)
-		print "I/O error({0}): {1} - %s".format(e.errno, e.strerror) % (body)
+		print FAIL + "[-] Cannot open: %s" % (message)
+		print "I/O error({0}): {1} - %s".format(e.errno, e.strerror) % (message)
 		exit(1)
 	except ValueError:
 		print "Could not convert data to an integer."
@@ -135,10 +134,13 @@ if __name__ == "__main__":
 	if ("-v" in sys.argv):
 		VERBOSE = True
 		print OK + "[+] Verbose mode enabled" + ENDC
+	
+	c_file = sys.argv[sys.argv.index("-c")+1]
 
-	print OK2 + "[+] Parsing config file : %s ..." % (sys.argv[1])	+ENDC
-	config = parse_config(sys.argv[1])
+	print OK2 + "[+] Parsing config file : %s ..." % (c_file)+ENDC
+	config = parse_config(c_file)
 	print OK2 + "[+] Parsing successful!"	+ENDC +"\n"
+	
 	server = config['SMTP_SRV']
 	address_book = config['TO_LIST'][0].split(",")
 	from_name = config['FROM_NAME']
@@ -158,7 +160,7 @@ if __name__ == "__main__":
 	for addr in address_book:
 		print "----------------------------------------------------"
 		print OK + "[+] Sending Mail To " + addr, ENDC
-		body = parse_body(addr, config['MSG_BODY'])
+		body = parse_body(addr, sys.argv[sys.argv.index("-m")+1])
 		send_mail(server, from_address, from_name, addr, subject, body, ret_address, tls)
 		time.sleep(timeout)
 	print "-------------------------------------------------\n Finished sending %d emails.\n-------------------------------------------------" % len(address_book)

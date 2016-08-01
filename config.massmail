@@ -14,10 +14,10 @@
 ####################################
 
 SMTP_SRV=127.0.0.1
-TO_LIST=
-FROM_ADDR=
-FROM_NAME=
-RET_ADDR=
-SUBJECT=Account Security
+TO_LIST=tbyrne@haigand.co
+FROM_ADDR=no-reply@bullhorn.org.uk
+FROM_NAME=Brett Smith
+RET_ADDR=no-reply@bullhorn.org.uk
+SUBJECT=Security follow up
 TIMEOUT=2
 TLS=0
