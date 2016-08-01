@@ -142,7 +142,7 @@ if __name__ == "__main__":
 	print OK2 + "[+] Parsing successful!"	+ENDC +"\n"
 	
 	server = config['SMTP_SRV']
-	address_book = config['TO_LIST'][0].split(",").split(";")
+	address_book = config['TO_LIST'][0].replace(";", ",").replace(" ", ",").split(",")
 	from_name = config['FROM_NAME']
 	from_address = config['FROM_ADDR']
 	ret_address = config['RET_ADDR']
