@@ -50,7 +50,7 @@ def send_mail(server, from_address, from_name, to_address, subject, body_arg, re
 
 	msg.attach(part1)
 	msg.attach(part2)
-	
+
 	try:
 		smtp = smtplib.SMTP(server)
 		smtp.set_debuglevel(VERBOSE)
@@ -74,7 +74,15 @@ def parse_config(in_config):
 			if line[0] == "SMTP_SRV":
 				out_config['SMTP_SRV'] = line[1].strip()
 			elif line[0] == "TO_LIST":
-				out_config['TO_LIST'].append(line[1].strip())
+				if ";" in line[1].strip():
+					for email in line[1].strip().split(";"):
+						out_config['TO_LIST'].append(email)
+				elif "," in line[1].strip():
+					for email in line[1].strip().split(",")
+						out_config['TO_LIST'].append(email)
+				else:
+					out_config['TO_LIST'].append(line[1].strip())
+
 			elif line[0] == "FROM_ADDR":
 				out_config['FROM_ADDR'] = line[1].strip()
 			elif line[0] == "FROM_NAME":
