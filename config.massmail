@@ -5,7 +5,7 @@
 #___________________________________________________________
 #
 # SMTP_SRV ---> The SMTP RELAY server
-# TO_LIST  ---> list of recipients, delimited by a semi-colon (;)
+# TO_LIST  ---> list of recipients, delimited by a semi-colon (;) or a comma (,)
 # FROM_ADDR ---> The From Address which appears on the recipients inbox
 # RET_ADDR  ---> The Return address used when user hits reply
 # SUBJECT  ---> The EMail subject ???
