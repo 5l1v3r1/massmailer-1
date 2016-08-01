@@ -74,15 +74,7 @@ def parse_config(in_config):
 			if line[0] == "SMTP_SRV":
 				out_config['SMTP_SRV'] = line[1].strip()
 			elif line[0] == "TO_LIST":
-				if ";" in line[1].strip():
-					for email in line[1].strip().split(";"):
-						out_config['TO_LIST'].append(email)
-				elif "," in line[1].strip():
-					for email in line[1].strip().split(",")
-						out_config['TO_LIST'].append(email)
-				else:
-					out_config['TO_LIST'].append(line[1].strip())
-
+				out_config['TO_LIST'].append(line[1].strip())
 			elif line[0] == "FROM_ADDR":
 				out_config['FROM_ADDR'] = line[1].strip()
 			elif line[0] == "FROM_NAME":
@@ -150,7 +142,7 @@ if __name__ == "__main__":
 	print OK2 + "[+] Parsing successful!"	+ENDC +"\n"
 	
 	server = config['SMTP_SRV']
-	address_book = config['TO_LIST'][0].split(",")
+	address_book = config['TO_LIST'][0].split(",").split(";")
 	from_name = config['FROM_NAME']
 	from_address = config['FROM_ADDR']
 	ret_address = config['RET_ADDR']
